@@ -1,15 +1,51 @@
+const path = require('path')
 const express = require('express')
 const dotenv = require('dotenv')
+const morgan = require('morgan')
+const exphbs = require('express-handlebars')
+const passport = require('passport')
+const session = require('express-session')
 const connectDB = require('./config/db')
-const { Db } = require('mongodb')
 
 //Load config
 dotenv.config({ path: './config/config.env'})
+
+// Passport Config
+require('./config/passport')(passport)
 
 connectDB()
 
 const app = express()
 
-const PORT = process.emitWarning.PORT || 3000
+// Logging
+if(process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
 
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`))
+// Handlebars
+app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', '.hbs')
+
+// Sessions
+app.use(session({
+    secret: 'boba fett',
+    resave: false,
+    saveUninitialized: false
+}))
+
+// Passport Middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
+// Statis foler
+app.use(express.static(path.join(__dirname, 'public')))
+
+// Routes 
+app.use('/', require('./routes/index'))
+app.use('/auth', require('./routes/auth'))
+
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, 
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+    )
