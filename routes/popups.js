@@ -23,4 +23,22 @@ router.post('/', ensureAuth, async (req, res) => {
     }
 })
 
+// @desc Show all popups
+// @route GET /popups
+router.get('/', ensureAuth, async (req, res) => {
+    try {
+        const popups = await Popup.find({ status: 'public '})
+            .populate('user')
+            .sort({ createdAt: 'desc'})
+            .lean()
+        
+            res.render('popups/index', {
+            popups
+        })
+    } catch (error) {
+        console.error(err)
+        res.render('error/500')
+    }
+})
+
 module.exports = router
