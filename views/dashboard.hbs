@@ -1,1 +1,25 @@
-<h1>Dashboard</h1>
+<h6>Dashboard</h6>
+<h3>Welcome {{name}}</h3>
+{{#if popups}}
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Specials</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each popups}}
+                <tr>
+                    <td><a href="/popups/{{_id}}"></a>{{title}}</td>
+                    <td>{{hours}}</td>
+                    <td><span class="dash-status">{{status}}</span></td>
+                    <td></td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <p>You have not created any popups.</p>
+{{/if}}
