@@ -23,22 +23,22 @@ router.post('/', ensureAuth, async (req, res) => {
     }
 })
 
-// @desc Show all popups
-// @route GET /popups
+// @desc    Show all stories
+// @route   GET /stories
 router.get('/', ensureAuth, async (req, res) => {
     try {
-        const popups = await Popup.find({ status: 'public '})
-            .populate('user')
-            .sort({ createdAt: 'desc'})
-            .lean()
-        
-            res.render('popups/index', {
-            popups
-        })
-    } catch (error) {
-        console.error(err)
-        res.render('error/500')
+      const popups = await Popup.find({ status: 'public' })
+        .populate('user')
+        .sort({ createdAt: 'desc' })
+        .lean()
+  
+      res.render('popups/index', {
+        popups,
+      })
+    } catch (err) {
+      console.error(err)
+      res.render('error/500')
     }
-})
+  })
 
 module.exports = router
