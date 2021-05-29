@@ -41,4 +41,24 @@ router.get('/', ensureAuth, async (req, res) => {
     }
   })
 
+// @desc Show edit page
+// @route GET /popups/edit/:d
+router.get('/edit/:id', ensureAuth, async (req, res) => {
+  const popup = await Popup.findOne({
+    _id: req.params.id
+  }).lean()
+
+  if(!story) {
+    return res.render('error/404')
+  }
+
+  if(story.user != req.user.id) {
+    res.redirect('/popups')
+  } else{
+    res.render('/popups/edit', {
+      popup,
+    })
+  }
+})
+
 module.exports = router
