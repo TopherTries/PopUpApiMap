@@ -23,8 +23,8 @@ router.post('/', ensureAuth, async (req, res) => {
     }
 })
 
-// @desc    Show all stories
-// @route   GET /stories
+// @desc    Show all popups
+// @route   GET /popups
 router.get('/', ensureAuth, async (req, res) => {
     try {
       const popups = await Popup.find({ status: 'public' })
@@ -42,25 +42,23 @@ router.get('/', ensureAuth, async (req, res) => {
   })
 
 // @desc Show edit page
-// @route GET /popups/edit/:d
+// @route GET /popups/edit
 router.get('/edit/:id', ensureAuth, async (req, res) => {
   const popup = await Popup.findOne({
     _id: req.params.id
   }).lean()
 
-  if(!story) {
+  if (!popup) {
     return res.render('error/404')
   }
 
-  if(story.user != req.user.id) {
+  if (popup.user != req.user.id) {
     res.redirect('/popups')
-  } else{
-    res.render('/popups/edit', {
+  } else {
+    res.render('popups/edit', {
       popup,
     })
   }
 })
-
-
 
 module.exports = router
