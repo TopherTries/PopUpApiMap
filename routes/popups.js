@@ -44,9 +44,33 @@ router.get('/', ensureAuth, async (req, res) => {
 // @desc Show edit page
 // @route GET /popups/edit
 router.get('/edit/:id', ensureAuth, async (req, res) => {
-  const popup = await Popup.findOne({
-    _id: req.params.id
-  }).lean()
+  try {
+    const popup = await Popup.findOne({
+      _id: req.params.id
+    }).lean()
+  
+    if (!popup) {
+      return res.render('error/404')
+    }
+  
+    if (popup.user != req.user.id) {
+      res.redirect('/popups')
+    } else {
+      res.render('popups/edit', {
+        popup,
+      })
+    }
+  } catch (error) {
+    console.error(err)
+    return res.render('error/500')
+  }
+})
+
+// @desc Update Story
+// @route PUT /popups/:id
+router.put('/:id', ensureAuth, async (req, res) => {
+  try {
+    let popup = await Popup.findById(req.params.id).lean()
 
   if (!popup) {
     return res.render('error/404')
@@ -55,9 +79,28 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
   if (popup.user != req.user.id) {
     res.redirect('/popups')
   } else {
-    res.render('popups/edit', {
-      popup,
+    popup = await Popup.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+      runValidators: true
     })
+
+    res.redirect('/dashboard')
+    }
+    } catch (error) {
+    console.error(err)
+    return res.render('error/500')
+  }
+})
+
+  // @desc Delete popup
+// @route DELETE /stories/:id
+router.delete('/:id', ensureAuth, async (req, res) => {
+  try {
+    await Popup.remove({ _id: req.params.id })
+    res.redirect('/dashboard')
+  } catch (error) {
+    console.error(err)
+    return res.render('error/500')
   }
 })
 
