@@ -41,6 +41,28 @@ router.get('/', ensureAuth, async (req, res) => {
     }
   })
 
+// @desc Show single popup
+// @route GET /popups/:id
+router.get('/:id', ensureAuth, async (req, res) => {
+  try {
+    let story = await Popup.findById(req.params.id)
+    .populate('user')
+    .lean()
+
+    if(!popup){
+      return res.render('error/404')
+    }
+
+    res.render('stories/show', {
+      story
+    })
+
+  } catch (error) {
+    console.error(err)
+    res.render('error/404')
+  }
+})
+
 // @desc Show edit page
 // @route GET /popups/edit
 router.get('/edit/:id', ensureAuth, async (req, res) => {
