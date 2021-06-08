@@ -126,4 +126,24 @@ router.delete('/:id', ensureAuth, async (req, res) => {
   }
 })
 
+// @desc User popups
+// @route GET /popups/user/:userId
+router.get('/user/:userId', ensureAuth, async (req, res) => {
+  try {
+    const popups = await Popup.find({
+      user: req.params.userId,
+      status: 'public'
+    })
+    .populate('user')
+    .lean()
+
+    res.render('sotries/index', {
+      stories
+    })
+  } catch (err) {
+    console.error(err)
+    res.render('error/500')
+  }
+})
+
 module.exports = router
