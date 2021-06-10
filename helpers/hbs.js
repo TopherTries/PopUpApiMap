@@ -22,7 +22,7 @@ module.exports = {
       if (floating) {
         return `<a href="/popups/edit/${popupId}" class="btn-floating halfway-fab blue"><i class="fas fa-edit fa-small"></i></a>`
       } else {
-        return `<a href="/popups/edit/${popupkId}"><i class="fas fa-edit"></i></a>`
+        return `<a href="/popups/edit/${popupId}"><i class="fas fa-edit"></i></a>`
       }
     } else {
       return ''

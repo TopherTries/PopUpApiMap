@@ -45,7 +45,7 @@ router.get('/', ensureAuth, async (req, res) => {
 // @route GET /popups/:id
 router.get('/:id', ensureAuth, async (req, res) => {
   try {
-    let story = await Popup.findById(req.params.id)
+    let popup = await Popup.findById(req.params.id)
     .populate('user')
     .lean()
 
@@ -53,8 +53,8 @@ router.get('/:id', ensureAuth, async (req, res) => {
       return res.render('error/404')
     }
 
-    res.render('stories/show', {
-      story
+    res.render('popups/show', {
+      popup
     })
 
   } catch (error) {
@@ -137,8 +137,8 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
     .populate('user')
     .lean()
 
-    res.render('sotries/index', {
-      stories
+    res.render('popups/index', {
+      popups
     })
   } catch (err) {
     console.error(err)
