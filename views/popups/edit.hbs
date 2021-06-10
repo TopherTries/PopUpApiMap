@@ -1,6 +1,38 @@
 <h3>Edit Popup</h3>
 <div class="row">
     <form action="/popups/{{popup._id}}" method="POST" class="col s12">
+        <script>
+    let autocomplete
+
+      function initAutocomplete() {
+        autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById('autocomplete'),
+          {
+            types: ['establishment'],
+            componentRestrictions: {'country': 'US'},
+            fields: ['place_id', 'geometry', 'name']
+          })
+
+          autocomplete.addListener('place_changed', onPlaceChanged)
+      }
+
+      function onPlaceChanged(){
+        let place = autocomplete.getPlace()
+
+        if (!place.geometry) {
+            // User did not select a prediction; reset the input field
+            document.getElementById('autocomplete').placeholder = 
+            'Enter a place to popup'
+        } else {
+            // Display details about the valid place
+            document.getElementById('details').innerHTML = place.name
+        }
+
+      }
+    </script>
+    <script async defer
+    src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBj7mzErZBHSkyR7xtY91vYVeXzgpDMRFE&libraries=places&callback=initAutocomplete'>
+    </script>
         <input type="hidden" name="_method" value="PUT">
         <div class="row">
             <div class="input-field">
@@ -36,7 +68,7 @@
             </div>
             <div class="input-field">
                 <h5>Where are you popping up?</h5>
-                <textarea id="location" name="location">{{popup.location}}</textarea>
+                <input id="autocomplete" placeholder="Enter a place to popup" type="text">
             </div>
         </div>
 
