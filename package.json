@@ -11,7 +11,6 @@
     "express-handlebars": "^5.3.2",
     "express-session": "^1.17.1",
     "i": "^0.3.6",
-    "jade": "^1.11.0",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.10",
