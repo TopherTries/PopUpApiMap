@@ -43,9 +43,7 @@
 <body>
   <h1>Search for your popup:</h1>
   <div id="map"></div>
-  <script src='./config/config.env'>
-    dotenv.config({ path: './config/config.env'})
-  </script>
+
   <script>
 
     function initialize() {
@@ -147,7 +145,12 @@
     }
     input.value = "";
   });
-}
+  }
+  </script>
+
+  <script 
+    async defer
+    src='https://maps.googleapis.com/maps/api/js?key={{mapApi}}&libraries=places&callback=initialize'> 
   </script>
 
   <div class="pac-card" id="pac-card">
@@ -190,9 +193,5 @@
       <span id="place-address"></span>
     </div>
   
-  <script 
-    async defer
-    src='https://maps.googleapis.com/maps/api/js?key={{process.env.GOOGLE_API_KEY}}&libraries=places&callback=initialize'> 
-    </script>
 </body>
 

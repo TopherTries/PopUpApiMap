@@ -19,7 +19,8 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
         const popups = await Popup.find({ user: req.user.id }).lean()
             res.render('dashboard', {
                 name: req.user.firstName,
-                popups
+                popups,
+                mapApi: process.env.GOOGLE_API_KEY
         })
     } catch (error) {
         console.log(err)
