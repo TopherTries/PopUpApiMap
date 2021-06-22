@@ -37,9 +37,9 @@ app.use(
   )
 
 // Logging
-if(process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'))
-}
+// if(process.env.NODE_ENV === 'development') {
+//     app.use(morgan('dev'))
+// }
 
 // Handlebars Helpers
 const { formatDate, stripTags, truncate, editIcon, select } = require('./helpers/hbs')
@@ -84,5 +84,5 @@ app.use('/popups', require('./routes/popups'))
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, 
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+    console.log(`Server running on port ${PORT}`)
     )
