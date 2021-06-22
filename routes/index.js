@@ -20,7 +20,7 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
             res.render('dashboard', {
                 name: req.user.firstName,
                 popups,
-                mapApi: process.env.GOOGLE_API_KEY
+                mapApi: process.env.GOOGLE_API_KEY                
         })
     } catch (error) {
         console.log(err)
