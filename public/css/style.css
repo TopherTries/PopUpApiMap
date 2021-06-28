@@ -96,3 +96,20 @@ p {
     font-weight: 500;
     padding: 6px 12px;
   }
+
+@media (max-width: 700px){
+  #map{
+    height:400px;
+    width:100%;
+  }
+  #pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 10px;
+    font-weight: 300;
+    margin-left: 3px;
+    padding: 0 2px 0 3px;
+    text-overflow: ellipsis;
+    width: 200px;
+  }
+}
