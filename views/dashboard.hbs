@@ -1,5 +1,7 @@
 <head>
   <link rel="stylesheet" href="/css/style.css">
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
 </head>
 <h6>Popupapi Map</h6>
 <h3>Welcome {{name}}</h3>
@@ -42,9 +44,19 @@
 
 <body>
   <h1>Search for your popup:</h1>
-  <div id="map"></div>
 
+  <div id='map'></div>
   <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoidG9waGVydHJpZXMiLCJhIjoiY2tyZmdwanV2M3plbzJ3cGR0bnZ5Z2I5byJ9.lHOkrdqeSGUjGdPEdoP3Cw';
+    var map = new mapboxgl.Map({
+    container: 'map',
+    center: [-90.071533, 29.951065],
+    zoom: 12,
+    style: 'mapbox://styles/mapbox/streets-v11'
+    });
+  </script>
+
+  {{!-- <script>
     
     function initialize() {
       initMap()
@@ -151,9 +163,11 @@
   <script 
     async defer
     src='https://maps.googleapis.com/maps/api/js?key={{mapApi}}&libraries=places&callback=initialize'> 
-  </script>
+  </script> --}}
 
-  <div class="pac-card" id="pac-card">
+  
+
+  {{!-- <div class="pac-card" id="pac-card">
       <div>
         <div id="titleAutcomplete">Popup Search</div>
         <div id="type-selector" class="pac-controls">
@@ -191,7 +205,7 @@
     <div id="infowindow-content">
       <span id="place-name" class="title"></span><br />
       <span id="place-address"></span>
-    </div>
+    </div> --}}
   
 </body>
 
