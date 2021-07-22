@@ -30,6 +30,18 @@
         CKEDITOR.replace('menu', 'menu', {
             plugins: 'wysiwygarea, toolbar, basicstyles, link'
         })
+        const Calendar = document.querySelector('.datepicker')
+        let instance = M.Datepicker.init(Calendar,{
+            showClearBtn: true,
+            autoClose: true
+        })
+        let date = instance.toString()
+
+        const Time = document.querySelector('.timepicker')
+        M.Timepicker.init(Time, {
+            autoClose: true
+        })
+        
     </script>
 </body>
 </html>

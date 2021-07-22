@@ -15,7 +15,11 @@ const PopupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    hours: {
+    datepicker: {
+        type: String,
+        required: true
+    },
+    timepicker: {
         type: String,
         required: true
     },
