@@ -53,7 +53,12 @@
     center: [-90.071533, 29.951065],
     zoom: 12,
     style: 'mapbox://styles/mapbox/streets-v11'
-    });
+    })
+
+    var marker = new mapboxgl.Marker()
+    .setLngLat([-90.1312836, 29.9483644])
+    .setPopup(new mapboxgl.Popup().setHTML("<h1>Hello World!</h1>"))
+    .addTo(map)
   </script>
 
   {{!-- <script>
