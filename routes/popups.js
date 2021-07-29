@@ -1,5 +1,6 @@
 const express = require('express')
 const { ensureAuth } = require('../middleware/auth')
+const { getPopupLocation, addPopupLocation } =  require('../controllers/popups')
 const router = express.Router()
 
 const Popup = require('../models/Popup')
@@ -22,6 +23,8 @@ router.post('/', ensureAuth, async (req, res) => {
         res.render('error/500')
     }
 })
+
+router.route('/api/v1/popups').get(getPopupLocation).post(addPopupLocation)
 
 // @desc    Show all popups
 // @route   GET /popups
@@ -145,5 +148,7 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
     res.render('error/500')
   }
 })
+
+
 
 module.exports = router

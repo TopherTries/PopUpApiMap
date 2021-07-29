@@ -9,6 +9,7 @@ const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const connectDB = require('./config/db')
+const cors = require('cors')
 
 //Load config
 dotenv.config({ path: './config/config.env'})
@@ -35,6 +36,9 @@ app.use(
       }
     })
   )
+
+// Enable cors 
+app.use(cors())
 
 // Logging
 // if(process.env.NODE_ENV === 'development') {
@@ -80,6 +84,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
 app.use('/popups', require('./routes/popups'))
+app.get('/api/v1/popups', require('./routes/popups'))
 
 const PORT = process.env.PORT || 3000
 

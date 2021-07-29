@@ -1,5 +1,6 @@
 const { text } = require('express')
 const mongoose = require('mongoose')
+const geocoder = require('../utils/geocoder')
 
 const PopupSchema = new mongoose.Schema({
     title: {
@@ -15,18 +16,25 @@ const PopupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    datepicker: {
+    hours: {
         type: String,
         required: true
     },
-    timepicker: {
+    address: {
         type: String,
-        required: true
+        required: [true, 'Please add an address']
     },
     location: {
-        type: String,
-        required: true
-    },
+        type: {
+          type: String, 
+          enum: ['Point'], 
+        },
+        coordinates: {
+          type: [Number],
+          index: '2dsphere'
+        },
+        formattedAddress: String
+      },
     status: {
         type: String,
         default: 'public',
@@ -40,6 +48,12 @@ const PopupSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+})
+
+// Geocode & create location
+PopupSchema.pre('save', async function(next) {
+    const location = await geocoder.geocode(this.address)
+    console.log(location)
 })
 
 module.exports = mongoose.model('Popup', PopupSchema)

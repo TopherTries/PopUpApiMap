@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "express-flash": "^0.0.2",
@@ -16,6 +17,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.10",
     "morgan": "^1.10.0",
+    "node-geocoder": "^3.27.0",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0"
   },
