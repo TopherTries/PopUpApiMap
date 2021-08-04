@@ -56,12 +56,35 @@
     style: 'mapbox://styles/mapbox/streets-v11'
     })
 
-    const marker = new mapboxgl.Marker()
-    .setLngLat([-90.1312836, 29.9483644])
-    .setPopup(new mapboxgl.Popup().setHTML("<h1>Hello World!</h1>"))
-    .addTo(map)
+    // const marker = new mapboxgl.Marker()
+    // .setLngLat([-90.1312836, 29.9483644])
+    // .setPopup(new mapboxgl.Popup().setHTML("<h1>Hello World!</h1>"))
+    // .addTo(map)
 
-    function loadMap() {
+    // Fetch popups from API
+    async function getPopups(){
+    const res = await fetch('/api/v1/popups')
+    const data = await res.json()
+
+    const popups = data.data.map(popup => {
+      return {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [popup.location.coordinates[0], popup.location.coordinates[1]]
+        },
+        properties: {
+          name: popup.title,
+          icon: 'shop'
+        }
+      }
+    })
+
+    loadMap(popups)
+  }
+
+    // Load map with points
+    function loadMap(popups) {
       map.on('load', function () {
     
     // Load an image from an external URL.
@@ -78,14 +101,7 @@
       'type': 'geojson',
       'data': {
       'type': 'FeatureCollection',
-      'features': [{
-        'type': 'Feature',
-        'geometry': {
-          'type': 'Point',
-          'coordinates': [-90.1312836, 29.9483644]
-          }
-        }
-      ]
+      features: popups
     }
     });
  
@@ -95,14 +111,20 @@
       'type': 'symbol',
       'source': 'point', // reference the data source
       'layout': {
-      'icon-image': 'cat', // reference the image
-      'icon-size': 0.25
+      'icon-image': '{icon}-15', // reference the image
+      'icon-size': 1.25,
+      'text-field': '{name}',
+      'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+      'text-offset': [0, 0.9],
+      'text-anchor': 'top'
             }
           });
         }
         );
       });
     }
+
+    getPopups()
   </script>
   
 </body>
