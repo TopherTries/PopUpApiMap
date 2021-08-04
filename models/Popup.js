@@ -53,7 +53,17 @@ const PopupSchema = new mongoose.Schema({
 // Geocode & create location
 PopupSchema.pre('save', async function(next) {
     const location = await geocoder.geocode(this.address)
-    console.log(location)
+    this.location = {
+        type: 'Point',
+        coordinates: [location[0].longitude, location[0].latitude],
+        formattedAddress: location[0].formattedAddress
+    }
+
+    // Do not save address
+    this.address = undefined
+    next()
 })
+
+
 
 module.exports = mongoose.model('Popup', PopupSchema)
