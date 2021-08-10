@@ -91,7 +91,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
   }
 })
 
-// @desc Update Story
+// @desc Update Popup
 // @route PUT /popups/:id
 router.put('/:id', ensureAuth, async (req, res) => {
   try {
